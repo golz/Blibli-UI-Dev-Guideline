@@ -7,7 +7,9 @@ Standardization for developing pyeongyang UI with reasonable performance approac
 Before Continue to the content make sure you already read and understand this following concept or tutorials
 
 [Block Element Modifier](http://getbem.com/)
+
 [Airbnb Javascript Style Guide](https://github.com/airbnb/javascript)
+
 [VueJs](https://vuejs.org/)
 
 
@@ -61,7 +63,7 @@ In Pyeongyang UI we are agreed to use scss
 ```
 
 ##Vue Js
-
+### Vue Template
 Use VueJs files template by this following order
 ```vue
 <template>
@@ -74,6 +76,7 @@ Use VueJs files template by this following order
 <style lang="scss" scoped></style>
 
 ```
+### Js Template
 Use Javascript template by this following order. use as needed. No need create all this lifecycle Hooks!
 ```js
 export default {
@@ -98,7 +101,41 @@ export default {
   beforeDestroy: {},
   destroyed: {}
 }
+```
 
+### Import Component
+Use Async import for all component (Code Splitting Approach)
+
+[More About Code Splitting](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)
+ ```js
+const TestComponent = () => import(
+  /* webpackChunkName: "c-test-component"*/ '@/components/TestComponent.vue')
+export default {
+  name: 'Test',
+  components: {
+    TestComponent
+  },
+}
+```
+### Import External Js utils or function
+Import only spesific function you want to use (Tree Shaking Approach)
+
+[More About Tree Shaking](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/tree-shaking)
+```js
+import { currencyFormat } from '@/utils'
+export default {
+  name: 'App',
+  data() {
+    return {
+      price: 1000
+    }
+  },
+  computed: {
+    priceInIdr() {
+      return currencyFormat(this.price)
+    }
+  }
+}
 ```
 
 
