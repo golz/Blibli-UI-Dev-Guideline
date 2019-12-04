@@ -137,5 +137,47 @@ export default {
   }
 }
 ```
+### Use Lazy Load image Component from Py-Main
+How To install it 
+1. npm Install --save supports-webp
+2. Add util with name "asset.js"
+
+```js
+import supportsWebP from 'supports-webp'
+
+function akamaiImage (url) {
+  if (!url) return
+  if (!supportsWebP || url.indexOf('.gif') > -1) return url
+  const prefix = url.indexOf('?') > -1 ? '&' : '?'
+  return url + prefix + 'output-format=webp'
+}
+export { akamaiImage }
+```
+3. Add mixins with name "akamai-image-mixin.js"
+```js
+import { akamaiImage } from '@/util/asset'
+
+export default {
+  methods: {
+    akamaiImage
+  }
+}
+```
+4. Add to mixins to your component Js
+```js
+import AkamaiImageMixin from '@/mixins/akamai-image-mixin'
+
+mixins: [
+    AkamaiImageMixin
+  ]
+```
+5. Use It in your template vue 
+```vue
+<lazy-image
+    class="lazy-image"
+    :lazy-src="akamaiImage(test.imageUrl)"
+/>
+```
+
 
 
