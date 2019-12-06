@@ -1,4 +1,4 @@
-# Pyeongyang UI Code Style Guide
+# Blibli UI Dev Guideline
 
 Standardization for developing pyeongyang UI with reasonable performance approach
 
