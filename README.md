@@ -138,7 +138,7 @@ computed: {
 //bad approach 
 
 const variable1 = {name : 'cat'}
-const variable2 = Object.assign({}, variable1)
+const variable2 = variable1
 
 const variable3 = ['lucky', 'cat']
 const variable5 = variable3
