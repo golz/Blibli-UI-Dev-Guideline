@@ -10,13 +10,163 @@ Before Continue to the content make sure you already read and understand this fo
 
 [Airbnb Javascript Style Guide](https://github.com/airbnb/javascript)
 
-[VueJs](https://vuejs.org/)
+[VueJs Style Guide](https://vuejs.org/v2/style-guide/)
 
 
 ## Table of Contents
 
-1. CSS 
-2. VueJs
+1. Common
+2. CSS 
+3. VueJs
+
+## Common
+
+### Don't go beyond 80 cols both in .vue and .js files
+```vue
+//bad approach
+
+<template>
+  <div>
+    <div class="header"><div class="header__left">Logo</div><div class="header__right">User</div></div>
+  </div>
+</template>
+
+//good approach
+
+<template>
+  <div>
+    <div class="header">
+      <div class="header__left">Logo</div>
+      <div class="header__right">User</div>
+    </div>
+  </div>
+</template>
+```
+```js
+
+//bad approach
+
+export default {
+  name: 'test',
+  props: {
+    students: {
+      type: Array,
+      default: []
+    }
+  },
+  computed: {
+    goodStudents () {
+      return this.students.length > 0 && this.students.filter(student => { return student.score > 7 && student.extracurricular > 2})
+    }
+  }
+}
+
+//good approach
+
+export default {
+  name: 'test',
+  props: {
+    students: {
+      type: Array,
+      default: []
+    }
+  },
+  computed: {
+    goodStudents () {
+      return this.students.length > 0 && this.students.filter(student => { 
+        return student.score > 7 && student.extracurricular > 2
+      })
+    }
+  }
+}
+
+//best approach
+
+export default {
+  name: 'test',
+  props: {
+    students: {
+      type: Array,
+      default: []
+    }
+  },
+  computed: {
+    goodStudents () {
+      return this.students.length > 0 &&
+        this.students.filter(student => { 
+        return student.score > 7 &&
+          student.extracurricular > 2
+      })
+    }
+  }
+}
+
+```
+
+### Use if shorthand syntax
+
+```js
+//bad approach
+computed: {
+    goodStudents () {
+      if(this.student.score > 7){
+        return 'I am the good guy'
+      } else {
+        return 'I am the bad guy, duh '
+      }
+    }
+}
+
+//good approach
+computed: {
+    goodStudents () {
+      if(this.student.score > 7) return 'I am the good guy'
+      else return 'I am the bad guy, duh '
+    }
+}
+
+//best approach
+computed: {
+    goodStudents () {
+      return this.student.score > 7 ? 'I am the good guy': 'I am the bad guy, duh '
+    }
+}
+```
+
+### Copied array or object in javascript
+```js
+//bad approach 
+
+const variable1 = {name : 'cat'}
+const variable2 = Object.assign({}, variable1)
+
+const variable3 = ['lucky', 'cat']
+const variable5 = variable3
+
+
+//good approach (So last year)
+
+const variable1 = {name : 'cat'}
+const variable2 = Object.assign({}, variable1)
+
+const variable3 = ['lucky', 'cat']
+const variable5 = variable3.slice(0)
+
+
+//best approach (Wow So trendy)
+
+const variable1 = {name : 'cat'}
+const variable2 = {...variable1}
+
+const variable3 = ['lucky', 'cat']
+const variable5 = [...variable3]
+
+```
+
+### Don't forget to compress image before copied to project folder
+
+Reduce image until it's very small with tinypng.com
+Reduce svg size with https://jakearchibald.github.io/svgomg/ with compression level 2
 
 ## CSS
 
@@ -62,7 +212,7 @@ In Pyeongyang UI we are agreed to use scss
 
 ```
 
-##Vue Js
+## Vue Js
 ### Vue Template
 Use VueJs files template by this following order
 ```vue
@@ -82,6 +232,7 @@ Use Javascript template by this following order. use as needed. No need create a
 export default {
   name: 'App',
   components: {},
+  props: {},
   data () {
     return {}
   },
